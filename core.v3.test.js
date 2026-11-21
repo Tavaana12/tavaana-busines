@@ -90,3 +90,17 @@ test('purchase and supplier payment reject invalid cash or payable amounts witho
   assert.equal(state.products[0].qty,0);
   assert.equal(state.suppliers[0].balance,20);
 });
+
+
+test('duplicate product lines are aggregated before stock validation', () => {
+  const initial={products:[{id:'p1',name:'Case',qty:3,buy:10,sell:20}],customers:[],sales:[],cashbox:0,cashMovements:[],activities:[]};
+  assert.throws(()=>processSale(initial,{paidAmount:40,items:[{productId:'p1',quantity:2},{productId:'p1',quantity:2}]}),/موجودی کافی/);
+  assert.equal(initial.products[0].qty,3);
+});
+
+test('purchase uses weighted average cost for remaining inventory', async () => {
+  const { recordPurchase } = await import('./core-v3.js');
+  const initial={products:[{id:'p1',name:'Case',qty:2,buy:50,sell:100}],suppliers:[],purchases:[],cashbox:1000,cashMovements:[],activities:[]};
+  const result=recordPurchase(initial,{productId:'p1',quantity:2,unitCost:100,paidAmount:400});
+  assert.equal(result.products[0].buy,75);
+});
