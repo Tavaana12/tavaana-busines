@@ -8,5 +8,9 @@ test('V3 browser module has valid JavaScript syntax', () => {
   const script = html.match(/<script type="module">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(script, 'module script exists in index.html');
   const withoutImports = script.replace(/^\s*import\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\s*/gm, '');
-  assert.doesNotThrow(() => new vm.Script(withoutImports, { filename: 'index.inline.js' }));
+  try {
+    new vm.Script(withoutImports, { filename: 'index.inline.js' });
+  } catch (error) {
+    throw new Error(error.stack || error.message);
+  }
 });
