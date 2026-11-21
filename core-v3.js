@@ -87,7 +87,9 @@ export function recordPurchase(state, input) {
   if (paid > Number(next.cashbox || 0)) throw new Error('موجودی صندوق برای این خرید کافی نیست.');
   const payable = total - paid;
   if (payable > 0 && !supplier) throw new Error('برای خرید نسیه، تأمین‌کننده را انتخاب کنید.');
-  const oldQuantity = Number(product.qty || 0), oldUnitCost = Number(product.buy || 0);\n  product.qty = oldQuantity + quantity;\n  product.buy = product.qty > 0 ? ((oldQuantity * oldUnitCost) + (quantity * unitCost)) / product.qty : unitCost;
+  const oldQuantity = Number(product.qty || 0), oldUnitCost = Number(product.buy || 0);
+  product.qty = oldQuantity + quantity;
+  product.buy = product.qty > 0 ? ((oldQuantity * oldUnitCost) + (quantity * unitCost)) / product.qty : unitCost;
   if (supplier) supplier.balance = Number(supplier.balance || 0) + payable;
   next.cashbox = Number(next.cashbox || 0) - paid;
   const date = input.date || dateNow();
