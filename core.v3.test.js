@@ -49,3 +49,44 @@ test('customer receipt moves receivable into cash without adding sales revenue a
   assert.equal(result.cashbox,300);
   assert.equal(result.cashMovements[0].type,'receipt');
 });
+
+
+test('purchase increases stock, reduces cash by paid amount and records supplier payable', async () => {
+  const { recordPurchase } = await import('./core-v3.js');
+  const initial = {products:[{id:'p1',name:'Case',qty:2,buy:50,sell:100}],suppliers:[{id:'s1',name:'Supplier',balance:0}],purchases:[],cashbox:500,cashMovements:[],activities:[]};
+  const result = recordPurchase(initial,{productId:'p1',supplierId:'s1',quantity:4,unitCost:60,paidAmount:150,date:'2026-11-22'});
+  assert.equal(result.products[0].qty,6);
+  assert.equal(result.cashbox,350);
+  assert.equal(result.suppliers[0].balance,90);
+  assert.equal(result.purchases[0].total,240);
+  assert.equal(result.cashMovements[0].direction,'out');
+});
+
+test('supplier payment reduces payable and cash without changing sales profit', async () => {
+  const { recordSupplierPayment } = await import('./core-v3.js');
+  const initial = {suppliers:[{id:'s1',name:'Supplier',balance:200}],cashbox:500,cashMovements:[],activities:[],transactions:[]};
+  const result = recordSupplierPayment(initial,{supplierId:'s1',amount:80,date:'2026-11-22'});
+  assert.equal(result.suppliers[0].balance,120);
+  assert.equal(result.cashbox,420);
+  assert.equal(result.transactions.length,0);
+  assert.equal(result.cashMovements[0].direction,'out');
+});
+
+test('expense is posted once to cash and operating expenses', async () => {
+  const { recordExpense } = await import('./core-v3.js');
+  const initial = {cashbox:100,cashMovements:[],activities:[],transactions:[]};
+  const result = recordExpense(initial,{title:'Rent',amount:30,date:'2026-11-22'});
+  assert.equal(result.cashbox,70);
+  assert.equal(result.transactions.length,1);
+  assert.equal(result.cashMovements.length,1);
+  assert.equal(result.cashMovements[0].direction,'out');
+});
+
+test('purchase and supplier payment reject invalid cash or payable amounts without mutating input', async () => {
+  const { recordPurchase, recordSupplierPayment } = await import('./core-v3.js');
+  const state={products:[{id:'p1',qty:0,buy:10}],suppliers:[{id:'s1',balance:20}],purchases:[],cashbox:5,cashMovements:[],activities:[]};
+  assert.throws(()=>recordPurchase(state,{productId:'p1',supplierId:'s1',quantity:1,unitCost:10,paidAmount:6}),/صندوق/);
+  assert.throws(()=>recordSupplierPayment(state,{supplierId:'s1',amount:21}),/بدهی/);
+  assert.equal(state.products[0].qty,0);
+  assert.equal(state.suppliers[0].balance,20);
+});
