@@ -26,3 +26,17 @@ export function validateTransaction(row) {
 export function calculateStock(movements = []) {
   return movements.reduce((sum, item) => sum + (item.type === 'in' ? Number(item.quantity) : -Number(item.quantity)), 0);
 }
+
+export function normalizeProfile(profile = {}) {
+  return {
+    name: String(profile.name || 'Mohammad Ali Tavaana').trim(),
+    phone: String(profile.phone || '').trim(),
+    email: String(profile.email || '').trim(),
+    title: String(profile.title || 'مدیر کسب‌وکار').trim(),
+    address: String(profile.address || '').trim()
+  };
+}
+
+export function normalizeTheme(theme) {
+  return ['green', 'blue', 'purple', 'orange'].includes(theme) ? theme : 'green';
+}

@@ -20,3 +20,16 @@ test('validateTransaction rejects missing or non-positive amounts', () => {
 test('calculateStock uses stock-in minus stock-out', () => {
   assert.equal(calculateStock([{type:'in',quantity:10},{type:'out',quantity:3}]), 7);
 });
+
+test('normalizeProfile keeps editable public contact fields with safe defaults', async () => {
+  const { normalizeProfile } = await import('./core.js');
+  assert.deepEqual(normalizeProfile({ name: 'Tavaana', phone: '', email: '' }), {
+    name: 'Tavaana', phone: '', email: '', title: 'مدیر کسب‌وکار', address: ''
+  });
+});
+
+test('normalizeTheme only accepts supported accent colors', async () => {
+  const { normalizeTheme } = await import('./core.js');
+  assert.equal(normalizeTheme('blue'), 'blue');
+  assert.equal(normalizeTheme('unknown'), 'green');
+});
