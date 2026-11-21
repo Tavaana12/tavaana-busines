@@ -25,11 +25,15 @@ export function processSale(state, input) {
   const next = clone(state);
   next.products ??= []; next.customers ??= []; next.sales ??= [];
   next.cashMovements ??= []; next.activities ??= [];
-  const lines = (input.items || []).map(line => {
-    const product = next.products.find(p => p.id === line.productId);
-    if (!product) throw new Error('کالا در انبار پیدا نشد.');
+  const requested = new Map();
+  for (const line of (input.items || [])) {
     const quantity = Number(line.quantity);
     if (!Number.isInteger(quantity) || quantity <= 0) throw new Error('تعداد کالا باید عدد صحیح و بیشتر از صفر باشد.');
+    requested.set(line.productId, (requested.get(line.productId) || 0) + quantity);
+  }
+  const lines = [...requested.entries()].map(([productId, quantity]) => {
+    const product = next.products.find(p => p.id === productId);
+    if (!product) throw new Error('کالا در انبار پیدا نشد.');
     if (Number(product.qty) < quantity) throw new Error('موجودی کافی نیست: ' + (product.name || 'کالا'));
     return { productId: product.id, name: product.name, quantity, unitPrice: Number(product.sell), unitCost: Number(product.buy) };
   });
@@ -83,8 +87,7 @@ export function recordPurchase(state, input) {
   if (paid > Number(next.cashbox || 0)) throw new Error('موجودی صندوق برای این خرید کافی نیست.');
   const payable = total - paid;
   if (payable > 0 && !supplier) throw new Error('برای خرید نسیه، تأمین‌کننده را انتخاب کنید.');
-  product.qty = Number(product.qty || 0) + quantity;
-  product.buy = unitCost;
+  const oldQuantity = Number(product.qty || 0), oldUnitCost = Number(product.buy || 0);\n  product.qty = oldQuantity + quantity;\n  product.buy = product.qty > 0 ? ((oldQuantity * oldUnitCost) + (quantity * unitCost)) / product.qty : unitCost;
   if (supplier) supplier.balance = Number(supplier.balance || 0) + payable;
   next.cashbox = Number(next.cashbox || 0) - paid;
   const date = input.date || dateNow();
