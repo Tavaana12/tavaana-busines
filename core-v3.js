@@ -51,7 +51,7 @@ export function processSale(state, input) {
     date: input.date || new Date().toISOString().slice(0, 10), createdAt: new Date().toISOString()
   };
   next.sales.push(sale);
-  if (paidAmount > 0) next.cashMovements.push({id:makeId(),type:'sale_receipt',amount:paidAmount,saleId:sale.id,date:sale.date});
+  if (paidAmount > 0) next.cashMovements.push({id:makeId(),type:'sale_receipt',direction:'in',kind:'دریافت فروش',description:'فاکتور فروش ' + sale.id,amount:paidAmount,saleId:sale.id,date:sale.date});
   next.activities.push({id:makeId(),type:'sale',entityId:sale.id,description:'ثبت فروش',createdAt:sale.createdAt});
   return { state: next, sale };
 }
@@ -67,7 +67,7 @@ export function recordReceipt(state, input) {
   customer.balance = Number(customer.balance || 0) - amount;
   next.cashbox = Number(next.cashbox || 0) + amount;
   const date = input.date || new Date().toISOString().slice(0, 10);
-  next.cashMovements.push({id:makeId(),type:'receipt',customerId:customer.id,amount,date});
+  next.cashMovements.push({id:makeId(),type:'receipt',direction:'in',kind:'دریافت از مشتری',description:customer.name || 'مشتری',customerId:customer.id,amount,date});
   next.activities.push({id:makeId(),type:'receipt',description:'دریافت از مشتری',createdAt:new Date().toISOString()});
   return next;
 }
