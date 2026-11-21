@@ -1,1 +1,19 @@
-{"name":"Tavaana Business – مدیریت کسب‌وکار","short_name":"Tavaana","start_url":"./index.html","display":"standalone","background_color":"#f3f6f4","theme_color":"#173b32","lang":"fa","dir":"rtl","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "Tavaana Business V3 – مدیریت کسب‌وکار",
+  "short_name": "Tavaana V3",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6f4",
+  "theme_color": "#123b32",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
