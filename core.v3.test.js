@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { calculateSaleTotals, processSale, recordReceipt } from './core.js';
+import { calculateSaleTotals, processSale, recordReceipt } from './core-v3.js';
 
 test('sale totals calculate revenue, cost of goods and net margin after discount', () => {
   const totals = calculateSaleTotals([
