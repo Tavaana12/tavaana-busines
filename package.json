@@ -1,1 +1,9 @@
-{"name":"tavaana-business-v2","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test"}}
+{
+  "name": "tavaana-business-v3",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
