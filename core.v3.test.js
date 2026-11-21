@@ -101,6 +101,6 @@ test('duplicate product lines are aggregated before stock validation', () => {
 test('purchase uses weighted average cost for remaining inventory', async () => {
   const { recordPurchase } = await import('./core-v3.js');
   const initial={products:[{id:'p1',name:'Case',qty:2,buy:50,sell:100}],suppliers:[],purchases:[],cashbox:1000,cashMovements:[],activities:[]};
-  const result=recordPurchase(initial,{productId:'p1',quantity:2,unitCost:100,paidAmount:400});
+  const result=recordPurchase(initial,{productId:'p1',quantity:2,unitCost:100,paidAmount:200});
   assert.equal(result.products[0].buy,75);
 });
