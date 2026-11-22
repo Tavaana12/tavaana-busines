@@ -46,3 +46,10 @@ node --test tests/core.test.js
 
 ## محدودیت امنیتی چندکاربره محلی
 این قابلیت برای جداسازی کاربردی کاربران روی یک دستگاه است، نه امنیت سازمانی در برابر دسترسی مستقیم به فایل‌ها/مرورگر یا ابزارهای توسعه. داده‌ها همچنان در IndexedDB همان مرورگر ذخیره می‌شوند و حساب‌ها بین دستگاه‌ها همگام نمی‌شوند. از حساب‌های دستگاه مشترک سیستم‌عامل و پشتیبان‌گیری منظم استفاده کنید.
+
+
+## Version 5.0
+- Seven-day remembered login per local user; explicit lock/logout ends the session.
+- Mobile bottom navigation for home, cash, transactions, and reminders.
+- Local reminders with due dates, optional amount/notes, completion, and deletion.
+- Cash overview for cash-in, cash-out, and net cash movement.
