@@ -26,3 +26,68 @@
 
 /* v5.7 responsive guard: prevent page-level horizontal overflow on phones */
 @media(max-width:760px){html,body{width:100%;max-width:100%;overflow-x:hidden}.app-shell,.main,.page{width:100%;min-width:0;max-width:100%}.main{margin:0;padding-left:15px;padding-right:15px}.content-grid>*,.stats-grid>*,.account-grid>*,.settings-grid>*{min-width:0}.panel,.stat-card,.account-card{min-width:0}}
+
+/* v5.9 responsive layout pass — preserve desktop UI, adapt tablet and phone widths */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(105%); transition: transform .25s ease; width: min(84vw, 300px); box-shadow: var(--shadow); z-index: 61; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin: 0; width: 100%; max-width: 100%; padding: 0 22px 28px; }
+  .mobile-only { display: inline-grid; place-items: center; }
+  .mobile-nav-overlay { display: block; }
+  .stats-grid, .account-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .content-grid { grid-template-columns: minmax(0, 1fr); }
+  .quick-panel { display: block; }
+  .quick-panel .panel-head { display: flex; }
+}
+@media (max-width: 760px) {
+  html, body, #app { width: 100%; max-width: 100%; min-width: 0; overflow-x: clip; }
+  .main { padding: 0 14px calc(112px + env(safe-area-inset-bottom)); }
+  .topbar { height: 68px; margin: 0 0 18px; gap: 8px; }
+  .topbar h2 { font-size: 16px; }
+  .top-actions { gap: 6px; }
+  .date-chip { display: none; }
+  .welcome-row, .page-tools { align-items: stretch; flex-direction: column; gap: 12px; }
+  .welcome-row h1 { font-size: clamp(21px, 6vw, 27px); line-height: 1.5; }
+  .welcome-row .btn, .page-tools > .btn, .page-tools .button-row { width: 100%; }
+  .page-tools .button-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-tools .button-row .btn { min-width: 0; white-space: normal; }
+  .stats-grid, .stats-grid.compact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .stat-card { min-width: 0; padding: 13px; overflow-wrap: anywhere; }
+  .stat-card strong { font-size: clamp(17px, 5vw, 22px); }
+  .account-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .account-card { min-width: 0; padding: 12px; overflow-wrap: anywhere; }
+  .content-grid, .settings-grid { grid-template-columns: minmax(0, 1fr); }
+  .panel { min-width: 0; padding: 14px; }
+  .panel-head, .section-heading { align-items: flex-start; flex-wrap: wrap; }
+  .filter-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .filter-row > *, .filter-row .search, .search { width: 100%; min-width: 0; max-width: none; }
+  .table-wrap { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
+  .report-line { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stock-line { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modal-backdrop { padding: 10px; align-items: end; }
+  .modal, .stock-modal { width: 100%; max-width: 100%; max-height: min(88dvh, 760px); border-radius: 20px 20px 14px 14px; padding: 16px; }
+  .modal-grid { grid-template-columns: minmax(0, 1fr); }
+  .field.full { grid-column: auto; }
+  .footer { padding-bottom: 8px; }
+}
+@media (max-width: 420px) {
+  .main { padding-left: 11px; padding-right: 11px; }
+  .stats-grid, .stats-grid.compact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .stat-card { padding: 10px; border-radius: 14px; }
+  .stat-card strong { font-size: 17px; }
+  .stat-top { font-size: 11px; }
+  .account-card { padding: 10px; }
+  .account-card strong { font-size: 15px; }
+  .panel { padding: 12px; }
+  .page-tools h3 { font-size: 17px; }
+  .page-tools .button-row { grid-template-columns: minmax(0, 1fr); }
+  .mobile-bottom-nav { left: 7px; right: 7px; bottom: calc(6px + env(safe-area-inset-bottom)); }
+  .mobile-bottom-nav button small { font-size: 9px; }
+  .modal-actions { flex-wrap: wrap; }
+  .modal-actions .btn { flex: 1 1 auto; }
+}
+@media (max-width: 340px) {
+  .stats-grid, .stats-grid.compact { grid-template-columns: minmax(0, 1fr); }
+  .account-grid { grid-template-columns: minmax(0, 1fr); }
+  .topbar h2 { font-size: 14px; }
+}
