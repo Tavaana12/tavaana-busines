@@ -60,3 +60,5 @@ node --test tests/core.test.js
 - Added 100 unique business tips; print advice cycles randomly without repeating until all 100 have appeared.
 - Aligned the app's Service Worker registration, cache name, and asset versions at 5.7.
 - Added narrow-screen overflow guards without changing accounting workflows or stored data.
+
+- Refined the 100 rotating business reminders into concise, natural Dari advice sentences.
