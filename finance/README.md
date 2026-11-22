@@ -53,3 +53,10 @@ node --test tests/core.test.js
 - Mobile bottom navigation for home, cash, transactions, and reminders.
 - Local reminders with due dates, optional amount/notes, completion, and deletion.
 - Cash overview for cash-in, cash-out, and net cash movement.
+
+
+## Version 5.7 — stability and print refinements
+- Fixed mobile drawer close control scope so page selection also dismisses the overlay.
+- Added 100 unique business tips; print advice cycles randomly without repeating until all 100 have appeared.
+- Aligned the app's Service Worker registration, cache name, and asset versions at 5.7.
+- Added narrow-screen overflow guards without changing accounting workflows or stored data.
