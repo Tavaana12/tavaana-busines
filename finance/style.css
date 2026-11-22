@@ -114,3 +114,51 @@
   .table-wrap { max-width:100% !important; overflow-x:auto !important; }
   .modal-grid { grid-template-columns:minmax(0,1fr) !important; }
 }
+
+
+/* v6.1 — mobile form modal: isolate scrolling and keep actions reachable */
+@media (max-width: 760px), (pointer: coarse) {
+  body:has(#modalRoot .modal-backdrop) {
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+  }
+  body:has(#modalRoot .modal-backdrop) .mobile-bottom-nav {
+    display: none !important;
+    pointer-events: none !important;
+  }
+  #modalRoot { position: relative; z-index: 120; }
+  .modal-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 120 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom)) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+  .modal, .stock-modal {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 700px !important;
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px) !important;
+    margin: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior-y: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    flex: 0 0 auto;
+  }
+  .modal-actions {
+    position: sticky !important;
+    bottom: -16px;
+    z-index: 2;
+    background: var(--surface);
+    padding: 12px 0 max(8px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+  }
+}
