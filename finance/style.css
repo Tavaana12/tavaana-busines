@@ -16,3 +16,6 @@
 
 /* v5.1: drawer interaction and setup form */
 @media(max-width:760px){.sidebar.open{transform:translateX(0);}.sidebar{overscroll-behavior:contain;}.auth-card form{display:grid;gap:9px}.auth-card form label{margin:5px 0 0}.auth-card form input{margin:0}.auth-card{max-height:calc(100dvh - 28px);overflow:auto}}
+
+/* v5.5 mobile drawer: visible backdrop, tap-outside and swipe-to-close */
+@media(max-width:760px){.sidebar{right:0;left:auto;inset-inline-start:auto;inset-inline-end:0;z-index:61;transform:translateX(105%);transition:transform .25s ease;will-change:transform;touch-action:pan-y}.sidebar.open{transform:translateX(0)}.mobile-nav-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:60;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease}.mobile-nav-overlay.visible{opacity:1;visibility:visible;pointer-events:auto}.mobile-bottom-nav{z-index:50}}
