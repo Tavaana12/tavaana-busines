@@ -1,4 +1,4 @@
-const CACHE='tavaana-business-v3-cache-2';
+const CACHE='tavaana-business-v3-cache-3';
 const FILES=['./','./index.html','./core-v3.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
